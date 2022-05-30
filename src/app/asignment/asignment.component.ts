@@ -7,5 +7,12 @@ import { Component } from "@angular/core";
 })
 
 export class AsignmentComponent {
+	userName = '';
+	isVisible = false;
 
+	onUpdateUserName() {
+		if (this.userName.length > 0) {
+			this.isVisible = true;
+		};
+	}
 }

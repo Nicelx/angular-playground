@@ -1,3 +1,5 @@
-<div class="asignment__alert">
-	<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur, quia?</p>
+<div class="asignment">
+	<input type="text" [(ngModel)] = "userName" (input) = "onUpdateUserName()">
+	<p>{{userName}}</p>
+	<button [disabled] = "!isVisible" (click) = "onUpdateUserName">update</button>
 </div>
