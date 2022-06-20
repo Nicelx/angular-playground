@@ -13,6 +13,8 @@ export class AppComponent {
 			content: "just a test",
 		},
 	];
+	oddNumbers: number[] = [];
+	evenNumbers: number[] = [];
 
 	onServerAdded(serverData: { serverName: string; serverContent: string }) {
 		this.serverElements.push({
@@ -34,5 +36,13 @@ export class AppComponent {
 	}
 	onDestroyFirst() {
 		this.serverElements.splice(0, 1);
+	}
+
+	onGameStarted(event) {
+		if (event.increment % 2 === 0 ) {
+			this.evenNumbers.push(event.increment);
+		} else {
+			this.oddNumbers.push(event.increment)
+		}
 	}
 }
