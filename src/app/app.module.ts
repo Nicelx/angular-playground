@@ -9,6 +9,7 @@ import { ServerElementComponent } from './server-element/server-element.componen
 import { GameControlComponent } from './asignment/game-control/game-control.component';
 import { OddComponent } from './asignment/odd/odd.component';
 import { EvenComponent } from './asignment/even/even.component';
+import { BasicHighlightDirective } from './basic-highlight/basic-highlight.directive';
 
 
 @NgModule({
@@ -19,9 +20,10 @@ import { EvenComponent } from './asignment/even/even.component';
     GameControlComponent,
     OddComponent,
     EvenComponent,
+    BasicHighlightDirective
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     FormsModule,
   ],
   providers: [],

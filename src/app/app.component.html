@@ -6,12 +6,12 @@
 	<hr />
 	<div class="row">
 		<div class="col-xs-12">
-			<button class = "btn btn-primary" (click) = "onChangeFirst()">Change first Element</button>
-			<button class = "btn btn-danger" (click) = "onDestroyFirst()">Destroy first Element</button>
+			<button class="btn btn-primary" (click)="onChangeFirst()">Change first Element</button>
+			<button class="btn btn-danger" (click)="onDestroyFirst()">Destroy first Element</button>
 			<app-server-element
 				*ngFor="let serverElement of serverElements"
 				[srvElement]="serverElement"
-				[name] = "serverElement.name"
+				[name]="serverElement.name"
 			>
 				<p #contentParagraph>
 					<strong *ngIf="serverElement.type === 'server'" style="color: red">{{
@@ -25,8 +25,39 @@
 
 	<div class="row">
 		<app-game-control (gameStarted)="onGameStarted($event)"></app-game-control>
-		<hr>
-		<app-odd *ngFor = "let oddNumber of oddNumbers" [number] = "oddNumber"></app-odd>
-		<app-even *ngFor = "let evenNumber of evenNumbers" [number] = "evenNumber"></app-even>
+		<hr />
+		<app-odd *ngFor="let oddNumber of oddNumbers" [number]="oddNumber"></app-odd>
+		<app-even *ngFor="let evenNumber of evenNumbers" [number]="evenNumber"></app-even>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<button class="btn btn-primary" (click)="onlyOdd = !onlyOdd">
+				Only show odd number
+			</button>
+			<ul class="list-group">
+				<div *ngIf="onlyOdd">
+					<li
+						class="list-group-item"
+						*ngFor="let odd of oddNumbers"
+						[ngClass]="{ odd: odd % 2 !== 0 }"
+						[ngStyle]="{ backgroundColor: odd % 2 !== 0 ? 'yellow' : 'transparent' }"
+					>
+						{{ odd }}
+					</li>
+				</div>
+				<div *ngIf="!onlyOdd">
+					<li
+						class="list-group-item"
+						*ngFor="let even of evenNumbers"
+						[ngClass]="{ odd: even % 2 === 0 }"
+						[ngStyle]="{ backgroundColor: even % 2 !== 0 ? 'yellow' : 'transparent' }"
+					>
+						{{ even }}
+					</li>
+				</div>
+			</ul>
+			<p appBasicHighlight>style with basic directive</p>
+		</div>
 	</div>
 </div>
