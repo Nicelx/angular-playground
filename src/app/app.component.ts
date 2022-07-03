@@ -1,11 +1,13 @@
-import { Component } from "@angular/core";
+import { Component , OnInit } from "@angular/core";
+import { AccountsService } from './accounts.service';
 
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.css"],
+	providers: [AccountsService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 	serverElements = [
 		{
 			type: "server",
@@ -13,8 +15,8 @@ export class AppComponent {
 			content: "just a test",
 		},
 	];
-	oddNumbers: number[] = [1,3,5];
-	evenNumbers: number[] = [2,4];
+	oddNumbers: number[] = [1, 3, 5];
+	evenNumbers: number[] = [2, 4];
 	// numbers = [1,2,3,4,5];
 	value = 10;
 
@@ -43,35 +45,22 @@ export class AppComponent {
 	}
 
 	onGameStarted(event) {
-		if (event.increment % 2 === 0 ) {
+		if (event.increment % 2 === 0) {
 			this.evenNumbers.push(event.increment);
 		} else {
-			this.oddNumbers.push(event.increment)
+			this.oddNumbers.push(event.increment);
 		}
 	}
 
 	// services
 
-	accounts = [
-		{
-		  name: 'Master Account',
-		  status: 'active'
-		},
-		{
-		  name: 'Testaccount',
-		  status: 'inactive'
-		},
-		{
-		  name: 'Hidden Account',
-		  status: 'unknown'
-		}
-	  ];
-	
-	  onAccountAdded(newAccount: {name: string, status: string}) {
-		this.accounts.push(newAccount);
-	  }
-	
-	  onStatusChanged(updateInfo: {id: number, newStatus: string}) {
-		this.accounts[updateInfo.id].status = updateInfo.newStatus;
-	  }
+	accounts: {name: string, status: string}[] = [];
+
+	constructor(private accountsService: AccountsService) {
+
+	}
+
+	ngOnInit() {
+		this.accounts = this.accountsService.accounts;
+	}
 }
