@@ -12,8 +12,10 @@ import { BasicHighlightDirective } from "./basic-highlight/basic-highlight.direc
 import { BetterHighlightDirective } from "./better-highlight/better-highlight.directive";
 import { UnlessDirective } from "./unless.directive";
 
-import { NewAccountComponent } from './new-account/new-account.component';
-import { AccountComponent } from './account/account.component';
+import { NewAccountComponent } from "./new-account/new-account.component";
+import { AccountComponent } from "./account/account.component";
+import { AccountsService } from "./accounts.service";
+import { LoggingService } from "./logging.service";
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -25,11 +27,11 @@ import { AccountComponent } from './account/account.component';
 		BasicHighlightDirective,
 		BetterHighlightDirective,
 		UnlessDirective,
-    NewAccountComponent,
-    AccountComponent
+		NewAccountComponent,
+		AccountComponent,
 	],
 	imports: [BrowserModule, FormsModule],
-providers: [],
+	providers: [AccountsService, LoggingService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
