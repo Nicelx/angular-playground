@@ -16,6 +16,8 @@ import { NewAccountComponent } from "./new-account/new-account.component";
 import { AccountComponent } from "./account/account.component";
 import { AccountsService } from "./accounts.service";
 import { LoggingService } from "./logging.service";
+import { AsignmentComponent } from "./asignment/asignment.component";
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -29,6 +31,7 @@ import { LoggingService } from "./logging.service";
 		UnlessDirective,
 		NewAccountComponent,
 		AccountComponent,
+		AsignmentComponent
 	],
 	imports: [BrowserModule, FormsModule],
 	providers: [AccountsService, LoggingService],
