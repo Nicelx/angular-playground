@@ -5,9 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { AppComponent } from "./app.component";
 import { CockpitComponent } from "./cockpit/cockpit.component";
 import { ServerElementComponent } from "./server-element/server-element.component";
-import { GameControlComponent } from "./asignment/game-control/game-control.component";
-import { OddComponent } from "./asignment/odd/odd.component";
-import { EvenComponent } from "./asignment/even/even.component";
+
 import { BasicHighlightDirective } from "./basic-highlight/basic-highlight.directive";
 import { BetterHighlightDirective } from "./better-highlight/better-highlight.directive";
 import { UnlessDirective } from "./unless.directive";
@@ -16,25 +14,28 @@ import { NewAccountComponent } from "./new-account/new-account.component";
 import { AccountComponent } from "./account/account.component";
 import { AccountsService } from "./accounts.service";
 import { LoggingService } from "./logging.service";
+
 import { AsignmentComponent } from "./asignment/asignment.component";
+import { ActiveUsersComponent } from './asignment/active-users/active-users.component';
+import { InactiveUsersComponent } from "./asignment/inactive-users/inactive-users.component";
+import { ActivityService } from "./asignment/activity.service";
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		CockpitComponent,
 		ServerElementComponent,
-		GameControlComponent,
-		OddComponent,
-		EvenComponent,
 		BasicHighlightDirective,
 		BetterHighlightDirective,
 		UnlessDirective,
 		NewAccountComponent,
 		AccountComponent,
-		AsignmentComponent
+		AsignmentComponent,
+		ActiveUsersComponent,
+		InactiveUsersComponent
 	],
 	imports: [BrowserModule, FormsModule],
-	providers: [AccountsService, LoggingService],
+providers: [AccountsService, LoggingService, ActivityService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

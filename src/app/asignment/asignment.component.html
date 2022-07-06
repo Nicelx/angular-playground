@@ -1,10 +1,8 @@
 <div class="asignment">
-	<!-- <input type="text" [(ngModel)] = "userName" (input) = "onUpdateUserName()">
-	<p>{{userName}}</p>
-	<button [disabled] = "!isVisible" (click) = "onUpdateUserName">update</button> -->
-
-	<button (click) = "onClickToggle()">show details</button>
-	<p *ngIf = "isVisible">some content</p>
-	<hr>
-	<p *ngFor = "let log of logs" [ngClass] = "{whiteFive: log >= 5}">{{log}}</p>
+	<app-active-users
+		(userSetToInactive)="onSetToInactive($event)"
+	></app-active-users>
+	<app-inactive-users
+		(userSetToActive)="onSetToActive($event)"
+	></app-inactive-users>
 </div>
