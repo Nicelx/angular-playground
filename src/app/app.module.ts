@@ -1,41 +1,32 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { AppComponent } from "./app.component";
-import { CockpitComponent } from "./cockpit/cockpit.component";
-import { ServerElementComponent } from "./server-element/server-element.component";
 
-import { BasicHighlightDirective } from "./basic-highlight/basic-highlight.directive";
-import { BetterHighlightDirective } from "./better-highlight/better-highlight.directive";
-import { UnlessDirective } from "./unless.directive";
-
-import { NewAccountComponent } from "./new-account/new-account.component";
-import { AccountComponent } from "./account/account.component";
-import { AccountsService } from "./accounts.service";
-import { LoggingService } from "./logging.service";
-
-import { AsignmentComponent } from "./asignment/asignment.component";
-import { ActiveUsersComponent } from './asignment/active-users/active-users.component';
-import { InactiveUsersComponent } from "./asignment/inactive-users/inactive-users.component";
-import { ActivityService } from "./asignment/activity.service";
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { UsersComponent } from './users/users.component';
+import { ServersComponent } from './servers/servers.component';
+import { UserComponent } from './users/user/user.component';
+import { EditServerComponent } from './servers/edit-server/edit-server.component';
+import { ServerComponent } from './servers/server/server.component';
+import { ServersService } from './servers/servers.service';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		CockpitComponent,
-		ServerElementComponent,
-		BasicHighlightDirective,
-		BetterHighlightDirective,
-		UnlessDirective,
-		NewAccountComponent,
-		AccountComponent,
-		AsignmentComponent,
-		ActiveUsersComponent,
-		InactiveUsersComponent
-	],
-	imports: [BrowserModule, FormsModule],
-providers: [AccountsService, LoggingService, ActivityService],
-	bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    UsersComponent,
+    ServersComponent,
+    UserComponent,
+    EditServerComponent,
+    ServerComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+  ],
+  providers: [ServersService],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
