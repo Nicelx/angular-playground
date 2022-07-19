@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 import { Params } from '@angular/router';
@@ -14,8 +14,9 @@ export class EditServerComponent implements OnInit {
   serverName = '';
   serverStatus = '';
   allowEdit = false;
+  changesSaved = false;
 
-  constructor(private serversService: ServersService, private route: ActivatedRoute) { }
+  constructor(private serversService: ServersService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     console.log(this.route.snapshot.queryParams)
@@ -34,6 +35,8 @@ export class EditServerComponent implements OnInit {
 
   onUpdateServer() {
     this.serversService.updateServer(this.server.id, {name: this.serverName, status: this.serverStatus});
+    this.changesSaved = true;
+    this.router.navigate(['../'] , {relativeTo: this.route})
   }
 
 }
