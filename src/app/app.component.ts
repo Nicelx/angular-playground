@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "./user.service";
 import { OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
+import { NgForm } from "@angular/forms";
 
 @Component({
 	selector: "app-root",
@@ -19,7 +20,15 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.userActivated = didActivate;
 		});
 	}
-  ngOnDestroy(): void {
-    this.activatedSub.unsubscribe();
-  }
+	ngOnDestroy(): void {
+		this.activatedSub.unsubscribe();
+	}
+
+	suggestUserName() {
+		const suggestedName = "Superuser";
+	}
+	onSubmit(form: NgForm) {
+		alert(form);
+		console.log(form);
+	}
 }
