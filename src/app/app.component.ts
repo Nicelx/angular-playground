@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { UserService } from "./user.service";
 import { OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
@@ -12,6 +12,8 @@ import { NgForm } from "@angular/forms";
 export class AppComponent implements OnInit, OnDestroy {
 	userActivated = false;
 	private activatedSub: Subscription;
+	@ViewChild('f') signupForm: NgForm;
+
 
 	constructor(private userService: UserService) {}
 
@@ -27,8 +29,11 @@ export class AppComponent implements OnInit, OnDestroy {
 	suggestUserName() {
 		const suggestedName = "Superuser";
 	}
-	onSubmit(form: NgForm) {
-		alert(form);
-		console.log(form);
+	// onSubmit(form: NgForm) {
+	// 	console.log(form);
+	// }
+	onSubmit() {
+		console.log(this.signupForm);
 	}
+
 }
