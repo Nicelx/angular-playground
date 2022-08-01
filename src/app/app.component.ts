@@ -13,6 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	userActivated = false;
 	private activatedSub: Subscription;
 	@ViewChild('f') signupForm: NgForm;
+	defaultQuestion = 'pet';
 
 
 	constructor(private userService: UserService) {}
