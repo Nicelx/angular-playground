@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { UserService } from "./user.service";
 import { OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormArray, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 
 @Component({
 	selector: "app-root",
@@ -63,6 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				'email' : new FormControl(null, [Validators.required, Validators.email]),
 			}),
 			'gender' : new FormControl('male'), 
+			'hobbies' : new FormArray([]),
 		})
 	}
 	ngOnDestroy(): void {
@@ -71,5 +72,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	onSubmit() {
 		console.log(this.signupForm);
+	}
+	onAddHobby() {
+		const control = new FormControl(null, Validators.required);
+		(<FormArray>this.signupForm.get('hobbies')).push(control);
 	}
 }
