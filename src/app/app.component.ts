@@ -16,16 +16,16 @@ export class AppComponent implements OnInit, OnDestroy {
 	// defaultQuestion = 'pet';
 	// answer = '';
 	// user = {
-		// 	username: '',
-		// 	email: '',
-		// 	secretQuestion: '',
-		// 	answer: '',
-		// 	gender: '',
-		// }
-		// submitted = false;
-		genders = ['male', 'female'];
-	signupForm : FormGroup;
-
+	// 	username: '',
+	// 	email: '',
+	// 	secretQuestion: '',
+	// 	answer: '',
+	// 	gender: '',
+	// }
+	// submitted = false;
+	genders = ["male", "female"];
+	signupForm: FormGroup;
+	forbiddenUsernames = ["Chris", "Anna"];
 
 	constructor(private userService: UserService) {}
 
@@ -58,23 +58,31 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.signupForm = new FormGroup({
-			'userData' : new FormGroup({
-				'username' : new FormControl(null, Validators.required),
-				'email' : new FormControl(null, [Validators.required, Validators.email]),
+			userData: new FormGroup({
+				username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
+				email: new FormControl(null, [Validators.required, Validators.email]),
 			}),
-			'gender' : new FormControl('male'), 
-			'hobbies' : new FormArray([]),
-		})
+			gender: new FormControl("male"),
+			hobbies: new FormArray([]),
+		});
 	}
-	ngOnDestroy(): void {
-		
-	}
+	ngOnDestroy(): void {}
 
 	onSubmit() {
 		console.log(this.signupForm);
 	}
 	onAddHobby() {
 		const control = new FormControl(null, Validators.required);
-		(<FormArray>this.signupForm.get('hobbies')).push(control);
+		(<FormArray>this.signupForm.get("hobbies")).push(control);
+	}
+
+	getControls() {
+		return (<FormArray>this.signupForm.get("hobbies")).controls;
+	}
+	forbiddenNames(control: FormControl) : {[s:string] : boolean} {
+		if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+			return {'nameIsForbidden' : true}			
+		}
+		return null;
 	}
 }
