@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { UserService } from "./user.service";
 import { OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 
 @Component({
@@ -59,17 +59,44 @@ export class AppComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.signupForm = new FormGroup({
 			userData: new FormGroup({
-				username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-				email: new FormControl(null, [Validators.required, Validators.email]),
+				username: new FormControl(null, [
+					Validators.required,
+					this.forbiddenNames.bind(this),
+				]),
+				email: new FormControl(
+					null,
+					[Validators.required, Validators.email],
+					this.forbiddenEmails
+				),
 			}),
 			gender: new FormControl("male"),
 			hobbies: new FormArray([]),
 		});
+		// this.signupForm.valueChanges.subscribe((value) => {
+		// 	console.log(value);
+		// });
+		this.signupForm.statusChanges.subscribe((status) => {
+			console.log(status);
+		});
+		this.signupForm.setValue({
+			'userData' : {
+				'username' : 'max',
+				'email' : 'max@test.com',
+			},
+			'gender': 'male',
+			'hobbies' : []
+		})
+		this.signupForm.patchValue({
+			'userData' : {
+				'username' : 'Nick'
+			}
+		})
 	}
 	ngOnDestroy(): void {}
 
 	onSubmit() {
 		console.log(this.signupForm);
+		this.signupForm.reset();
 	}
 	onAddHobby() {
 		const control = new FormControl(null, Validators.required);
@@ -79,10 +106,28 @@ export class AppComponent implements OnInit, OnDestroy {
 	getControls() {
 		return (<FormArray>this.signupForm.get("hobbies")).controls;
 	}
-	forbiddenNames(control: FormControl) : {[s:string] : boolean} {
+	forbiddenNames(control: FormControl): { [s: string]: boolean } {
 		if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
-			return {'nameIsForbidden' : true}			
+			return { nameIsForbidden: true };
 		}
 		return null;
+	}
+	forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+		const promise = new Promise<any>((res, rej) => {
+			setTimeout(() => {
+				if (control.value === "test@test.com") {
+					res({ emailIsForbidden: true });
+				} else {
+					res(null);
+				}
+			}, 1500);
+		});
+
+		return promise;
+	}
+
+	get username() {
+		console.log("get username ", this.signupForm.get("userData.username"));
+		return this.signupForm.get("userData.username");
 	}
 }
