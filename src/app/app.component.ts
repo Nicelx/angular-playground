@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Post } from "./post.model";
+import { PostsService } from "./posts.service";
 
 @Component({
 	selector: "app-root",
@@ -9,59 +10,32 @@ import { Post } from "./post.model";
 	styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient, private postService : PostsService) {}
 
 	loadedPosts: Post[] = [];
-
+	isFetching = false;
+	
 	isLoadedPostsEmpty = () => {
-		if (this.loadedPosts.length >= 1) return true;
+		if (this.loadedPosts.length < 1) return true;
 		else return false
 	}
-
+	
 	ngOnInit() {
-		this.fetchPosts();
+		this.postService.fetchPosts();
 	}
 
 	onCreatePost(postData: Post) {
-		// Send Http request
-		this.http
-			.post<{name: string}>(
-				"https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
-				postData
-			)
-			.subscribe((responseData) => {
-				console.log(responseData);
-			});
+		this.postService.createAndStorePost(postData.title, postData.content);
+		
 	}
 
 	onFetchPosts() {
 		// Send Http request
-		this.fetchPosts();
+		this.postService.fetchPosts();
 	}
 
 	onClearPosts() {
 		// Send Http request
 	}
 
-	private fetchPosts() {
-		this.http
-			.get<{ [key: string]: Post }>(
-				"https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json"
-			)
-			.pipe(
-				map((responseData) => {
-					const postsArray: Post[] = [];
-					for (const key in responseData) {
-						if (responseData.hasOwnProperty(key)) {
-							postsArray.push({ ...responseData[key], id: key });
-						}
-					}
-					return postsArray;
-				})
-			)
-			.subscribe((posts) => {
-				this.loadedPosts = posts;
-			});
-	}
-	
 }
