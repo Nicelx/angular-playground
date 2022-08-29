@@ -20,7 +20,7 @@ export class PostsService {
 	}
 
 	fetchPosts() {
-		this.http
+		return this.http
 			.get<{ [key: string]: Post }>(
 				"https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json"
 			)
@@ -34,8 +34,10 @@ export class PostsService {
 					}
 					return postsArray;
 				})
-			)
-			.subscribe((posts) => {
-			});
+			);
+	}
+
+	deletePosts() {
+		return this.http.delete("https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json")
 	}
 }

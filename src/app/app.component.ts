@@ -10,32 +10,40 @@ import { PostsService } from "./posts.service";
 	styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-	constructor(private http: HttpClient, private postService : PostsService) {}
+	constructor(private http: HttpClient, private postService: PostsService) {}
 
 	loadedPosts: Post[] = [];
 	isFetching = false;
-	
+
 	isLoadedPostsEmpty = () => {
 		if (this.loadedPosts.length < 1) return true;
-		else return false
-	}
-	
+		else return false;
+	};
+
 	ngOnInit() {
-		this.postService.fetchPosts();
+		this.isFetching = true;
+		this.postService.fetchPosts().subscribe((posts) => {
+			this.isFetching = false;
+			this.loadedPosts = posts;
+		});
 	}
 
 	onCreatePost(postData: Post) {
 		this.postService.createAndStorePost(postData.title, postData.content);
-		
 	}
 
 	onFetchPosts() {
 		// Send Http request
-		this.postService.fetchPosts();
+		this.isFetching = true;
+		this.postService.fetchPosts().subscribe((posts) => {
+			this.isFetching = false;
+			this.loadedPosts = posts;
+		});
 	}
 
 	onClearPosts() {
-		// Send Http request
+		this.postService.deletePosts().subscribe(() => {
+			this.loadedPosts = [];
+		})
 	}
-
 }
