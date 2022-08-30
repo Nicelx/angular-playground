@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
 
 	loadedPosts: Post[] = [];
 	isFetching = false;
+	error = null;
 
 	isLoadedPostsEmpty = () => {
 		if (this.loadedPosts.length < 1) return true;
@@ -25,6 +26,8 @@ export class AppComponent implements OnInit {
 		this.postService.fetchPosts().subscribe((posts) => {
 			this.isFetching = false;
 			this.loadedPosts = posts;
+		}, error => {
+			this.error = error.message;
 		});
 	}
 
@@ -38,6 +41,8 @@ export class AppComponent implements OnInit {
 		this.postService.fetchPosts().subscribe((posts) => {
 			this.isFetching = false;
 			this.loadedPosts = posts;
+		}, error => {
+			this.error = error.message;
 		});
 	}
 
