@@ -1,10 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Post } from "./post.model";
-import { map } from "rxjs/operators";
+import { map, catchError } from "rxjs/operators";
+import { Subject, throwError } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class PostsService {
+	error = new Subject<string>();
+
 	constructor(private http: HttpClient) {}
 
 	createAndStorePost(title: string, content: string) {
@@ -14,9 +17,14 @@ export class PostsService {
 				"https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
 				postData
 			)
-			.subscribe((responseData) => {
-				console.log(responseData);
-			});
+			.subscribe(
+				(responseData) => {
+					console.log(responseData);
+				},
+				(error) => {
+					this.error.next(error.message);
+				}
+			);
 	}
 
 	fetchPosts() {
@@ -33,11 +41,17 @@ export class PostsService {
 						}
 					}
 					return postsArray;
+				}),
+				catchError((errorRes) => {
+					// log, send to analytics etc..
+					return throwError(errorRes);
 				})
 			);
 	}
 
 	deletePosts() {
-		return this.http.delete("https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json")
+		return this.http.delete(
+			"https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json"
+		);
 	}
 }
