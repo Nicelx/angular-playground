@@ -66,7 +66,8 @@ export class PostsService {
 		return this.http.delete(
 			"https://angular-test-afd6e-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
 			{
-				observe: 'events'
+				observe: 'events',
+				responseType: 'text'
 			}
 		).pipe(tap(event => {
 			console.log(event);			
